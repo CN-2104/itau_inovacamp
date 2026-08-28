@@ -1,5 +1,5 @@
 {
-    "processedAt": "2026-08-28T16:13:27-03:00",
+    "processedAt": "2026-08-28T16:48:09-03:00",
     "clients": [
         {
             "internalProfile": "CLT_STABLE",
@@ -14,10 +14,20 @@
                     "id": "acc_001",
                     "name": "Itaú PF",
                     "type": "CHECKING",
-                    "balance": 3250.00,
+                    "balance": 150.00,
                     "currencyCode": "BRL",
                     "creditData": {
                         "creditLimit": 1500.00
+                    }
+                },
+                {
+                    "id": "acc_001b",
+                    "name": "Bradesco PF",
+                    "type": "SAVINGS",
+                    "balance": 4500.00,
+                    "currencyCode": "BRL",
+                    "creditData": {
+                        "creditLimit": 0.00
                     }
                 }
             ],
@@ -42,7 +52,7 @@
                     "id": "tx_9a4b83d2",
                     "date": "2026-08-10",
                     "description": "MP*IFOOD",
-                    "amount": -45.30,
+                    "amount": -345.30,
                     "type": "DEBIT",
                     "status": "POSTED",
                     "category": "Food & Dining",
@@ -59,43 +69,22 @@
                     "dueDate": "2026-09-10"
                 }
             ],
-            "loans": [
-                {
-                    "id": "loan_201",
-                    "type": "PAYROLL_LOAN",
-                    "outstandingBalance": 15400.00,
-                    "interestRate": 1.89,
-                    "installments": {
-                        "amount": 450.00
-                    }
-                }
-            ],
+            "loans": [],
             "dataEngineering": {
-                "identityEnrichment": {
-                    "fraudRiskScore": "LOW"
+                "expenseAnalysis": {
+                    "topCategory": "Food & Dining",
+                    "monthlyIncreasePercentage": 15.4,
+                    "insight": "Gastos com delivery estão 15% acima da média móvel dos últimos 3 meses."
                 },
                 "dynamicIncomeEstimation": {
                     "presumedMonthlyIncome": 6500.00,
                     "modelConfidence": 0.98,
                     "primarySource": "RECURRING_TED_SALARY"
                 },
-                "patternsAndRecurrences": {
-                    "expenseConcentrationDays": [
-                        5,
-                        6,
-                        7
-                    ],
-                    "recurringPayments": [
-                        "Netflix",
-                        "Spotify",
-                        "Gympass"
-                    ],
-                    "30dDefaultRisk": "VERY_LOW"
-                },
-                "proprietaryCreditScore": {
-                    "score": 810,
-                    "trend": "STABLE",
-                    "financialLeverage": "HEALTHY"
+                "iaiOverview": {
+                    "trigger": "cross_account_debt_payment",
+                    "context": "Fatura do Itaú (R$ 1.250) vence em breve e o saldo atual (R$ 150) é insuficiente, gerando risco de cheque especial. Identificado saldo sobrando no Bradesco (R$ 4.500).",
+                    "action_prompt": "Carlos, notei que seus gastos com delivery aumentaram 15% este mês. Sua fatura do Itaú de R$ 1.250 vence dia 10, mas você só tem R$ 150 lá. Vi que você tem saldo no Bradesco. Posso iniciar um 'Smart Transfer' via Open Finance para cobrir a fatura e evitar juros?"
                 }
             }
         },
@@ -115,17 +104,8 @@
                     "balance": 845.50,
                     "currencyCode": "BRL",
                     "creditData": {
-                        "creditLimit": 0.00
-                    }
-                },
-                {
-                    "id": "acc_003",
-                    "name": "Banco do Brasil PF",
-                    "type": "SAVINGS",
-                    "balance": 150.00,
-                    "currencyCode": "BRL",
-                    "creditData": {
-                        "creditLimit": 0.00
+                        "creditLimit": 0.00,
+                        "preApprovedWorkingCapital": 5000.00
                     }
                 }
             ],
@@ -150,7 +130,7 @@
                     "id": "tx_2b1d94f5",
                     "date": "2026-08-25",
                     "description": "MP*MERCADOLIVRE",
-                    "amount": -1200.00,
+                    "amount": -3200.00,
                     "type": "DEBIT",
                     "status": "POSTED",
                     "category": "Equipment",
@@ -169,28 +149,23 @@
             ],
             "loans": [],
             "dataEngineering": {
-                "identityEnrichment": {
-                    "fraudRiskScore": "MEDIUM"
-                },
-                "dynamicIncomeEstimation": {
-                    "3mRollingAverageIncome": 5420.00,
-                    "incomeVariance": "HIGH",
-                    "modelConfidence": 0.75,
-                    "primarySource": "PULVERIZED_PIX"
-                },
                 "patternsAndRecurrences": {
-                    "expenseConcentrationDays": [
-                        10,
-                        15,
-                        20
-                    ],
                     "behavioralAlert": "PF_PJ_ACCOUNT_MIXING",
                     "30dDefaultRisk": "HIGH"
                 },
-                "proprietaryCreditScore": {
-                    "score": 420,
-                    "trend": "DOWNWARD",
-                    "financialLeverage": "HIGH_VULNERABILITY"
+                "taxManagement": {
+                    "pendingTaxes": [
+                        {
+                            "type": "DAS-MEI",
+                            "amount": 75.60,
+                            "dueDate": "2026-09-20"
+                        }
+                    ]
+                },
+                "iaiOverview": {
+                    "trigger": "working_capital_and_tax_reserve",
+                    "context": "Fatura C6 em atraso devido à compra de equipamentos caros. Limite de capital de giro pré-aprovado no Inter PJ identificado. Imposto MEI a vencer.",
+                    "action_prompt": "Mariana, vi que a compra de equipamentos impactou seu caixa e a fatura C6 atrasou. Você tem R$ 5.000 de capital de giro pré-aprovado no Inter PJ; quer simular para quitar o cartão e organizar o fluxo? Aproveitando, posso reter R$ 75,60 dos seus Pix recebidos hoje para já deixar o imposto DAS-MEI pago?"
                 }
             }
         },
@@ -207,26 +182,16 @@
                     "id": "acc_004",
                     "name": "Nubank",
                     "type": "CHECKING",
-                    "balance": 185.20,
+                    "balance": 520.20,
                     "currencyCode": "BRL",
                     "creditData": {
                         "creditLimit": 400.00
-                    }
-                },
-                {
-                    "id": "acc_005",
-                    "name": "Mercado Pago",
-                    "type": "CHECKING",
-                    "balance": 45.00,
-                    "currencyCode": "BRL",
-                    "creditData": {
-                        "creditLimit": 0.00
                     }
                 }
             ],
             "transactionsSummary": {
                 "inflowVolume30d": 3850.00,
-                "outflowVolume30d": 3715.40
+                "outflowVolume30d": 3320.00
             },
             "transactions": [
                 {
@@ -240,40 +205,9 @@
                     "paymentData": {
                         "paymentMethod": "PIX"
                     }
-                },
-                {
-                    "id": "tx_5e6f7g8h",
-                    "date": "2026-08-27",
-                    "description": "POSTO ESTRELA DO SUL",
-                    "amount": -65.00,
-                    "type": "DEBIT",
-                    "status": "POSTED",
-                    "category": "Transport/Gas",
-                    "paymentData": {
-                        "paymentMethod": "DEBIT_CARD"
-                    }
-                },
-                {
-                    "id": "tx_9i0j1k2l",
-                    "date": "2026-08-25",
-                    "description": "OFICINA DUAS RODAS",
-                    "amount": -180.00,
-                    "type": "DEBIT",
-                    "status": "POSTED",
-                    "category": "Auto Maintenance",
-                    "paymentData": {
-                        "paymentMethod": "PIX"
-                    }
                 }
             ],
-            "bills": [
-                {
-                    "id": "bill_103",
-                    "status": "OPEN",
-                    "totalAmount": 380.00,
-                    "dueDate": "2026-09-05"
-                }
-            ],
+            "bills": [],
             "loans": [
                 {
                     "id": "loan_202",
@@ -281,37 +215,30 @@
                     "outstandingBalance": 6500.00,
                     "interestRate": 2.45,
                     "installments": {
-                        "amount": 345.00
+                        "amount": 345.00,
+                        "nextDueDate": "2026-09-05"
                     }
                 }
             ],
             "dataEngineering": {
-                "identityEnrichment": {
-                    "fraudRiskScore": "LOW"
-                },
-                "dynamicIncomeEstimation": {
-                    "3mRollingAverageIncome": 3650.00,
-                    "incomeVariance": "VERY_HIGH",
-                    "modelConfidence": 0.82,
-                    "primarySource": "GIG_PLATFORM_WEEKLY_PAYOUTS"
-                },
-                "patternsAndRecurrences": {
-                    "expenseConcentrationDays": [
-                        1,
-                        2,
-                        3,
-                        4,
+                "gigEconomyStatistics": {
+                    "serviceApp": "iFood",
+                    "estimatedDeliveries30d": 120,
+                    "averageTicketPayout": 32.08,
+                    "peakEarningDays": [
                         5,
                         6,
                         7
-                    ],
-                    "behavioralAlert": "HIGH_TRANSPORT_MAINTENANCE_COSTS",
-                    "30dDefaultRisk": "MEDIUM"
+                    ]
                 },
-                "proprietaryCreditScore": {
-                    "score": 580,
-                    "trend": "VOLATILE",
-                    "financialLeverage": "MODERATE_VULNERABILITY"
+                "dynamicIncomeEstimation": {
+                    "3mRollingAverageIncome": 3650.00,
+                    "primarySource": "GIG_PLATFORM_WEEKLY_PAYOUTS"
+                },
+                "iaiOverview": {
+                    "trigger": "bill_reserve_and_platform_stats",
+                    "context": "Recebeu payout semanal da plataforma de app. Possui financiamento do veículo de trabalho vencendo na próxima semana. Perfil propício a consumir saldo antes do vencimento.",
+                    "action_prompt": "João, ótimo trabalho! Seus repasses do iFood indicam cerca de 120 corridas este mês (média de R$ 32 por entrega). Como o repasse de R$ 420 acabou de cair e a parcela da sua moto (R$ 345) vence dia 05, quer que eu já crie um 'Cofrinho de Pagamento' travando esse valor? Assim você garante o veículo do trabalho sem se preocupar!"
                 }
             }
         }

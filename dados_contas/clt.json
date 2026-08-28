@@ -11,10 +11,20 @@
             "id": "acc_001",
             "name": "Itaú PF",
             "type": "CHECKING",
-            "balance": 3250.00,
+            "balance": 150.00,
             "currencyCode": "BRL",
             "creditData": {
                 "creditLimit": 1500.00
+            }
+        },
+        {
+            "id": "acc_001b",
+            "name": "Bradesco PF",
+            "type": "SAVINGS",
+            "balance": 4500.00,
+            "currencyCode": "BRL",
+            "creditData": {
+                "creditLimit": 0.00
             }
         }
     ],
@@ -39,7 +49,7 @@
             "id": "tx_9a4b83d2",
             "date": "2026-08-10",
             "description": "MP*IFOOD",
-            "amount": -45.30,
+            "amount": -345.30,
             "type": "DEBIT",
             "status": "POSTED",
             "category": "Food & Dining",
@@ -56,50 +66,22 @@
             "dueDate": "2026-09-10"
         }
     ],
-    "loans": [
-        {
-            "id": "loan_201",
-            "type": "PAYROLL_LOAN",
-            "outstandingBalance": 15400.00,
-            "interestRate": 1.89,
-            "installments": {
-                "amount": 450.00
-            }
-        }
-    ],
+    "loans": [],
     "dataEngineering": {
-        "identityEnrichment": {
-            "fraudRiskScore": "LOW"
+        "expenseAnalysis": {
+            "topCategory": "Food & Dining",
+            "monthlyIncreasePercentage": 15.4,
+            "insight": "Gastos com delivery estão 15% acima da média móvel dos últimos 3 meses."
         },
         "dynamicIncomeEstimation": {
             "presumedMonthlyIncome": 6500.00,
             "modelConfidence": 0.98,
             "primarySource": "RECURRING_TED_SALARY"
         },
-        "patternsAndRecurrences": {
-            "expenseConcentrationDays": [
-                5,
-                6,
-                7
-            ],
-            "recurringPayments": [
-                "Netflix",
-                "Spotify",
-                "Amazon Prime",
-                "HBO+",
-                "Gympass"
-            ],
-            "30dDefaultRisk": "VERY_LOW"
-        },
-        "proprietaryCreditScore": {
-            "score": 810,
-            "trend": "STABLE",
-            "financialLeverage": "HEALTHY"
+        "iaiOverview": {
+            "trigger": "cross_account_debt_payment",
+            "context": "Fatura do Itaú (R$ 1.250) vence em breve e o saldo atual (R$ 150) é insuficiente, gerando risco de cheque especial. Identificado saldo sobrando no Bradesco (R$ 4.500).",
+            "action_prompt": "Carlos, notei que seus gastos com delivery aumentaram 15% este mês. Sua fatura do Itaú de R$ 1.250 vence dia 10, mas você só tem R$ 150 lá. Vi que você tem saldo no Bradesco. Posso iniciar um 'Smart Transfer' via Open Finance para cobrir a fatura e evitar juros?"
         }
-    },
-    "iaiOverview": {
-        "trigger": "subscription_audit",
-        "context": "Cliente possui 4 streamings ativos e saldo projetado negativo.",
-        "action_prompt": "Identifiquei que você não acessa a Amazon Prime há 2 meses. Quer que eu cancele para economizar R$ 19,90 e evitar o cheque especial amanhã?"
     }
 }
