@@ -1,12 +1,14 @@
-// import { Button } from "@/components/ui/button"
-// import { Header } from "./components/layout/Header"
+import { Header } from "./components/layout/Header"
+import { Chat } from "./components/Chat"
 
 export function App() {
   return (
-    <main>
-      {/* <Header label="InovaCamp" onBack={() => console.log("Back button clicked")} /> */}
-      oi
-    </main>
+    <div className="flex h-dvh min-h-0 flex-col">
+      <Header onBack={() => console.log("Back button clicked")} />
+      <main className="flex min-h-0 flex-1 flex-col">
+        <Chat />
+      </main>
+    </div>
   )
 }
 
