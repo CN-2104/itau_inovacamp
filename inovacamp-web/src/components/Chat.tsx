@@ -5,11 +5,11 @@ import { useChat } from "@ai-sdk/react"
 import { convertFileListToFileUIParts, type FileUIPart } from "ai"
 import {
   ArrowUpIcon,
+  ChevronRightIcon,
   GlobeIcon,
   ImageIcon,
   MessageCircleDashedIcon,
   PaperclipIcon,
-  PencilLineIcon,
   PlusIcon,
   RotateCwIcon,
   SquareIcon,
@@ -65,18 +65,28 @@ const CHAT_TOOLS = [
 
 type ChatToolId = (typeof CHAT_TOOLS)[number]["id"]
 
-export type ChatSuggestion = {
-  /** Leading fragment rendered in bold, e.g. "Fazer Pix". */
+type ChatSuggestionBase = {
+  /** Leading fragment rendered in bold, e.g. "Rastrear boletos". */
   emphasis?: string
   /** Remainder of the row label. */
   label: string
-  /** Text sent or inserted. Defaults to the emphasis plus the label. */
-  prompt?: string
-  /** `send` fires the prompt; `fill` drops it in the composer to complete. */
-  action?: "send" | "fill"
   /** Trailing icon. Defaults to the one matching the action. */
   icon?: React.ComponentType<{ className?: string }>
 }
+
+export type ChatSuggestion =
+  | (ChatSuggestionBase & {
+      /** Sends a prompt into the conversation. The default. */
+      action?: "send"
+      /** Text sent. Defaults to the emphasis plus the label. */
+      prompt?: string
+    })
+  | (ChatSuggestionBase & {
+      /** Leaves the chat for a dedicated flow instead of sending a prompt. */
+      action: "navigate"
+      /** Destination handed to `onNavigate`. */
+      screen: string
+    })
 
 export type ChatSuggestionGroup = {
   heading: string
@@ -88,25 +98,34 @@ const DEFAULT_SUGGESTIONS: ChatSuggestionGroup[] = [
   {
     heading: "Iniciar conversa",
     items: [
-      { label: "Meu salário será suficiente para cobrir os boletos dessa semana?" },
+      {
+        label:
+          "Meu salário será suficiente para cobrir os boletos dessa semana?",
+      },
       { label: "Quanto eu gastei com transporte no último mês?" },
       { label: "Quais são meus boletos em aberto?" },
     ],
   },
   {
-    heading: "Preencher com",
+    heading: "Ações rápidas",
     items: [
       {
-        emphasis: "Prever saldo",
-        label: "até...",
-        prompt: "Prever saldo até",
-        action: "fill",
+        emphasis: "Rastrear boletos",
+        label: "em todas as minhas contas",
+        action: "navigate",
+        screen: "rastrear-boletos",
       },
       {
-        emphasis: "Mapear assinaturas",
-        label: "do cartão…",
-        prompt: "Mapear assinaturas do cartão",
-        action: "fill",
+        emphasis: "Trazer meu financiamento",
+        label: "pro Itaú",
+        action: "navigate",
+        screen: "migrar-financiamento",
+      },
+      {
+        emphasis: "Cancele meus débitos automáticos",
+        label: "em outras contas",
+        action: "navigate",
+        screen: "cancelar-debitos-automaticos",
       },
     ],
   },
@@ -133,6 +152,8 @@ export type ChatProps = {
   placeholder?: string
   className?: string
   onError?: (error: Error) => void
+  /** Opens a dedicated flow for a `navigate` suggestion. */
+  onNavigate?: (screen: string, suggestion: ChatSuggestion) => void
 }
 
 export function Chat({
@@ -148,12 +169,12 @@ export function Chat({
   placeholder = "Escreva sua mensagem…",
   className,
   onError,
+  onNavigate,
 }: ChatProps) {
   const [input, setInput] = React.useState("")
   const [attachments, setAttachments] = React.useState<FileUIPart[]>([])
   const [enabledTools, setEnabledTools] = React.useState<ChatToolId[]>([])
   const [generatedThreadId] = React.useState(createThreadId)
-  const textareaRef = React.useRef<HTMLTextAreaElement>(null)
   const fileInputRef = React.useRef<HTMLInputElement>(null)
   const imageInputRef = React.useRef<HTMLInputElement>(null)
   const resolvedThreadId = threadId ?? generatedThreadId
@@ -209,25 +230,15 @@ export function Chat({
   }
 
   function applySuggestion(suggestion: ChatSuggestion) {
-    const prompt =
-      suggestion.prompt ??
-      [suggestion.emphasis, suggestion.label].filter(Boolean).join(" ")
-
-    if (suggestion.action !== "fill") {
-      submitPrompt(prompt)
+    if (suggestion.action === "navigate") {
+      onNavigate?.(suggestion.screen, suggestion)
       return
     }
 
-    setInput(prompt)
-
-    const textarea = textareaRef.current
-    if (textarea) {
-      textarea.focus()
-      requestAnimationFrame(() => {
-        const end = textarea.value.length
-        textarea.setSelectionRange(end, end)
-      })
-    }
+    submitPrompt(
+      suggestion.prompt ??
+        [suggestion.emphasis, suggestion.label].filter(Boolean).join(" ")
+    )
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -386,7 +397,6 @@ export function Chat({
                 ) : null}
 
                 <InputGroupTextarea
-                  ref={textareaRef}
                   aria-label="Mensagem"
                   className="max-h-40 min-h-14 overflow-y-auto px-3 py-2.5"
                   placeholder={placeholder}
@@ -491,14 +501,14 @@ function SuggestionRow({
 }) {
   const Icon =
     suggestion.icon ??
-    (suggestion.action === "fill" ? PencilLineIcon : ArrowUpIcon)
+    (suggestion.action === "navigate" ? ChevronRightIcon : ArrowUpIcon)
 
   return (
     <button
       type="button"
       disabled={disabled}
       onClick={onSelect}
-      className="flex w-full text-sm items-center justify-between gap-4 rounded-xl px-2 py-3 text-left transition-colors hover:bg-muted/60 disabled:pointer-events-none disabled:opacity-50"
+      className="flex w-full items-center justify-between gap-4 rounded-xl px-2 py-3 text-left text-sm transition-colors hover:bg-muted/60 disabled:pointer-events-none disabled:opacity-50"
     >
       <span className="min-w-0">
         {suggestion.emphasis ? (
