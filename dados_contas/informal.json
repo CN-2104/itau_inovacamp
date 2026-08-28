@@ -1,0 +1,126 @@
+{
+    "internalProfile": "GIG_ECONOMY_HIGH_VARIANCE",
+    "identity": {
+        "id": "id_554433221",
+        "fullName": "João Pedro Alves",
+        "taxNumber": "09876543211",
+        "documentType": "CPF"
+    },
+    "accounts": [
+        {
+            "id": "acc_004",
+            "name": "Nubank",
+            "type": "CHECKING",
+            "balance": 185.20,
+            "currencyCode": "BRL",
+            "creditData": {
+                "creditLimit": 400.00
+            }
+        },
+        {
+            "id": "acc_005",
+            "name": "Mercado Pago",
+            "type": "CHECKING",
+            "balance": 45.00,
+            "currencyCode": "BRL",
+            "creditData": {
+                "creditLimit": 0.00
+            }
+        }
+    ],
+    "transactionsSummary": {
+        "inflowVolume30d": 3850.00,
+        "outflowVolume30d": 3715.40
+    },
+    "transactions": [
+        {
+            "id": "tx_1a2b3c4d",
+            "date": "2026-08-26",
+            "description": "IFOOD AGENCIA DE RESTAURANTES",
+            "amount": 420.50,
+            "type": "CREDIT",
+            "status": "POSTED",
+            "category": "Income/Platform Payout",
+            "paymentData": {
+                "paymentMethod": "PIX"
+            }
+        },
+        {
+            "id": "tx_5e6f7g8h",
+            "date": "2026-08-27",
+            "description": "POSTO ESTRELA DO SUL",
+            "amount": -65.00,
+            "type": "DEBIT",
+            "status": "POSTED",
+            "category": "Transport/Gas",
+            "paymentData": {
+                "paymentMethod": "DEBIT_CARD"
+            }
+        },
+        {
+            "id": "tx_9i0j1k2l",
+            "date": "2026-08-25",
+            "description": "OFICINA DUAS RODAS",
+            "amount": -180.00,
+            "type": "DEBIT",
+            "status": "POSTED",
+            "category": "Auto Maintenance",
+            "paymentData": {
+                "paymentMethod": "PIX"
+            }
+        }
+    ],
+    "bills": [
+        {
+            "id": "bill_103",
+            "status": "OPEN",
+            "totalAmount": 380.00,
+            "dueDate": "2026-09-05"
+        }
+    ],
+    "loans": [
+        {
+            "id": "loan_202",
+            "type": "VEHICLE_FINANCING",
+            "outstandingBalance": 6500.00,
+            "interestRate": 2.45,
+            "installments": {
+                "amount": 345.00
+            }
+        }
+    ],
+    "dataEngineering": {
+        "identityEnrichment": {
+            "fraudRiskScore": "LOW"
+        },
+        "dynamicIncomeEstimation": {
+            "3mRollingAverageIncome": 3650.00,
+            "incomeVariance": "VERY_HIGH",
+            "modelConfidence": 0.82,
+            "primarySource": "GIG_PLATFORM_WEEKLY_PAYOUTS"
+        },
+        "patternsAndRecurrences": {
+            "expenseConcentrationDays": [
+                1,
+                2,
+                3,
+                4,
+                5,
+                6,
+                7
+            ],
+            "behavioralAlert": "HIGH_TRANSPORT_MAINTENANCE_COSTS",
+            "30dDefaultRisk": "MEDIUM"
+        },
+        "proprietaryCreditScore": {
+            "score": 580,
+            "trend": "VOLATILE",
+            "financialLeverage": "MODERATE_VULNERABILITY"
+        },
+        "iaiOverview": {
+            "trigger": "contextual_liquidity_offer",
+            "context": "Transação na oficina negada. Cliente precisa do veículo para gerar renda.",
+            "action_prompt": "Carlos, vi que faltou saldo na Oficina. Consigo liberar um Pix Crédito de R$ 350 agora mesmo para você não parar de trabalhar. Quer aprovar em 1-clique?"
+        }
+    }
+}

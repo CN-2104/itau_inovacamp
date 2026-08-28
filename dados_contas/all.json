@@ -1,0 +1,319 @@
+{
+    "processedAt": "2026-08-28T16:13:27-03:00",
+    "clients": [
+        {
+            "internalProfile": "CLT_STABLE",
+            "identity": {
+                "id": "id_982374982",
+                "fullName": "Carlos Eduardo Silva",
+                "taxNumber": "11122233344",
+                "documentType": "CPF"
+            },
+            "accounts": [
+                {
+                    "id": "acc_001",
+                    "name": "Itaú PF",
+                    "type": "CHECKING",
+                    "balance": 3250.00,
+                    "currencyCode": "BRL",
+                    "creditData": {
+                        "creditLimit": 1500.00
+                    }
+                }
+            ],
+            "transactionsSummary": {
+                "inflowVolume30d": 6500.00,
+                "outflowVolume30d": 4120.30
+            },
+            "transactions": [
+                {
+                    "id": "tx_8f3a92c1",
+                    "date": "2026-08-05",
+                    "description": "TED SALARIO EMPRESA XYZ",
+                    "amount": 6500.00,
+                    "type": "CREDIT",
+                    "status": "POSTED",
+                    "category": "Income/Salary",
+                    "paymentData": {
+                        "paymentMethod": "TED"
+                    }
+                },
+                {
+                    "id": "tx_9a4b83d2",
+                    "date": "2026-08-10",
+                    "description": "MP*IFOOD",
+                    "amount": -45.30,
+                    "type": "DEBIT",
+                    "status": "POSTED",
+                    "category": "Food & Dining",
+                    "paymentData": {
+                        "paymentMethod": "CREDIT_CARD"
+                    }
+                }
+            ],
+            "bills": [
+                {
+                    "id": "bill_101",
+                    "status": "OPEN",
+                    "totalAmount": 1250.00,
+                    "dueDate": "2026-09-10"
+                }
+            ],
+            "loans": [
+                {
+                    "id": "loan_201",
+                    "type": "PAYROLL_LOAN",
+                    "outstandingBalance": 15400.00,
+                    "interestRate": 1.89,
+                    "installments": {
+                        "amount": 450.00
+                    }
+                }
+            ],
+            "dataEngineering": {
+                "identityEnrichment": {
+                    "fraudRiskScore": "LOW"
+                },
+                "dynamicIncomeEstimation": {
+                    "presumedMonthlyIncome": 6500.00,
+                    "modelConfidence": 0.98,
+                    "primarySource": "RECURRING_TED_SALARY"
+                },
+                "patternsAndRecurrences": {
+                    "expenseConcentrationDays": [
+                        5,
+                        6,
+                        7
+                    ],
+                    "recurringPayments": [
+                        "Netflix",
+                        "Spotify",
+                        "Gympass"
+                    ],
+                    "30dDefaultRisk": "VERY_LOW"
+                },
+                "proprietaryCreditScore": {
+                    "score": 810,
+                    "trend": "STABLE",
+                    "financialLeverage": "HEALTHY"
+                }
+            }
+        },
+        {
+            "internalProfile": "MEI_INFORMAL_MIXED",
+            "identity": {
+                "id": "id_102938475",
+                "fullName": "Mariana Costa Santos",
+                "taxNumber": "44555666000177",
+                "documentType": "CNPJ"
+            },
+            "accounts": [
+                {
+                    "id": "acc_002",
+                    "name": "Inter PJ",
+                    "type": "CHECKING",
+                    "balance": 845.50,
+                    "currencyCode": "BRL",
+                    "creditData": {
+                        "creditLimit": 0.00
+                    }
+                },
+                {
+                    "id": "acc_003",
+                    "name": "Banco do Brasil PF",
+                    "type": "SAVINGS",
+                    "balance": 150.00,
+                    "currencyCode": "BRL",
+                    "creditData": {
+                        "creditLimit": 0.00
+                    }
+                }
+            ],
+            "transactionsSummary": {
+                "inflowVolume30d": 8940.00,
+                "outflowVolume30d": 8500.00
+            },
+            "transactions": [
+                {
+                    "id": "tx_7e5c61a9",
+                    "date": "2026-08-27",
+                    "description": "Pix recebido - Cliente A",
+                    "amount": 350.00,
+                    "type": "CREDIT",
+                    "status": "POSTED",
+                    "category": "Services Provided",
+                    "paymentData": {
+                        "paymentMethod": "PIX"
+                    }
+                },
+                {
+                    "id": "tx_2b1d94f5",
+                    "date": "2026-08-25",
+                    "description": "MP*MERCADOLIVRE",
+                    "amount": -1200.00,
+                    "type": "DEBIT",
+                    "status": "POSTED",
+                    "category": "Equipment",
+                    "paymentData": {
+                        "paymentMethod": "CREDIT_CARD"
+                    }
+                }
+            ],
+            "bills": [
+                {
+                    "id": "bill_102",
+                    "status": "OVERDUE",
+                    "totalAmount": 3400.00,
+                    "dueDate": "2026-08-15"
+                }
+            ],
+            "loans": [],
+            "dataEngineering": {
+                "identityEnrichment": {
+                    "fraudRiskScore": "MEDIUM"
+                },
+                "dynamicIncomeEstimation": {
+                    "3mRollingAverageIncome": 5420.00,
+                    "incomeVariance": "HIGH",
+                    "modelConfidence": 0.75,
+                    "primarySource": "PULVERIZED_PIX"
+                },
+                "patternsAndRecurrences": {
+                    "expenseConcentrationDays": [
+                        10,
+                        15,
+                        20
+                    ],
+                    "behavioralAlert": "PF_PJ_ACCOUNT_MIXING",
+                    "30dDefaultRisk": "HIGH"
+                },
+                "proprietaryCreditScore": {
+                    "score": 420,
+                    "trend": "DOWNWARD",
+                    "financialLeverage": "HIGH_VULNERABILITY"
+                }
+            }
+        },
+        {
+            "internalProfile": "GIG_ECONOMY_HIGH_VARIANCE",
+            "identity": {
+                "id": "id_554433221",
+                "fullName": "João Pedro Alves",
+                "taxNumber": "09876543211",
+                "documentType": "CPF"
+            },
+            "accounts": [
+                {
+                    "id": "acc_004",
+                    "name": "Nubank",
+                    "type": "CHECKING",
+                    "balance": 185.20,
+                    "currencyCode": "BRL",
+                    "creditData": {
+                        "creditLimit": 400.00
+                    }
+                },
+                {
+                    "id": "acc_005",
+                    "name": "Mercado Pago",
+                    "type": "CHECKING",
+                    "balance": 45.00,
+                    "currencyCode": "BRL",
+                    "creditData": {
+                        "creditLimit": 0.00
+                    }
+                }
+            ],
+            "transactionsSummary": {
+                "inflowVolume30d": 3850.00,
+                "outflowVolume30d": 3715.40
+            },
+            "transactions": [
+                {
+                    "id": "tx_1a2b3c4d",
+                    "date": "2026-08-26",
+                    "description": "IFOOD AGENCIA DE RESTAURANTES",
+                    "amount": 420.50,
+                    "type": "CREDIT",
+                    "status": "POSTED",
+                    "category": "Income/Platform Payout",
+                    "paymentData": {
+                        "paymentMethod": "PIX"
+                    }
+                },
+                {
+                    "id": "tx_5e6f7g8h",
+                    "date": "2026-08-27",
+                    "description": "POSTO ESTRELA DO SUL",
+                    "amount": -65.00,
+                    "type": "DEBIT",
+                    "status": "POSTED",
+                    "category": "Transport/Gas",
+                    "paymentData": {
+                        "paymentMethod": "DEBIT_CARD"
+                    }
+                },
+                {
+                    "id": "tx_9i0j1k2l",
+                    "date": "2026-08-25",
+                    "description": "OFICINA DUAS RODAS",
+                    "amount": -180.00,
+                    "type": "DEBIT",
+                    "status": "POSTED",
+                    "category": "Auto Maintenance",
+                    "paymentData": {
+                        "paymentMethod": "PIX"
+                    }
+                }
+            ],
+            "bills": [
+                {
+                    "id": "bill_103",
+                    "status": "OPEN",
+                    "totalAmount": 380.00,
+                    "dueDate": "2026-09-05"
+                }
+            ],
+            "loans": [
+                {
+                    "id": "loan_202",
+                    "type": "VEHICLE_FINANCING",
+                    "outstandingBalance": 6500.00,
+                    "interestRate": 2.45,
+                    "installments": {
+                        "amount": 345.00
+                    }
+                }
+            ],
+            "dataEngineering": {
+                "identityEnrichment": {
+                    "fraudRiskScore": "LOW"
+                },
+                "dynamicIncomeEstimation": {
+                    "3mRollingAverageIncome": 3650.00,
+                    "incomeVariance": "VERY_HIGH",
+                    "modelConfidence": 0.82,
+                    "primarySource": "GIG_PLATFORM_WEEKLY_PAYOUTS"
+                },
+                "patternsAndRecurrences": {
+                    "expenseConcentrationDays": [
+                        1,
+                        2,
+                        3,
+                        4,
+                        5,
+                        6,
+                        7
+                    ],
+                    "behavioralAlert": "HIGH_TRANSPORT_MAINTENANCE_COSTS",
+                    "30dDefaultRisk": "MEDIUM"
+                },
+                "proprietaryCreditScore": {
+                    "score": 580,
+                    "trend": "VOLATILE",
+                    "financialLeverage": "MODERATE_VULNERABILITY"
+                }
+            }
+        }
+    ]
+}

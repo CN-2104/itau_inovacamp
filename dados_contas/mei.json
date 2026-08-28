@@ -1,0 +1,100 @@
+{
+    "internalProfile": "MEI_INFORMAL_MIXED",
+    "identity": {
+        "id": "id_102938475",
+        "fullName": "Mariana Costa Santos",
+        "taxNumber": "44555666000177",
+        "documentType": "CNPJ"
+    },
+    "accounts": [
+        {
+            "id": "acc_002",
+            "name": "Inter PJ",
+            "type": "CHECKING",
+            "balance": 845.50,
+            "currencyCode": "BRL",
+            "creditData": {
+                "creditLimit": 0.00
+            }
+        },
+        {
+            "id": "acc_003",
+            "name": "Banco do Brasil PF",
+            "type": "SAVINGS",
+            "balance": 150.00,
+            "currencyCode": "BRL",
+            "creditData": {
+                "creditLimit": 0.00
+            }
+        }
+    ],
+    "transactionsSummary": {
+        "inflowVolume30d": 8940.00,
+        "outflowVolume30d": 8500.00
+    },
+    "transactions": [
+        {
+            "id": "tx_7e5c61a9",
+            "date": "2026-08-27",
+            "description": "Pix recebido - Cliente A",
+            "amount": 350.00,
+            "type": "CREDIT",
+            "status": "POSTED",
+            "category": "Services Provided",
+            "paymentData": {
+                "paymentMethod": "PIX"
+            }
+        },
+        {
+            "id": "tx_2b1d94f5",
+            "date": "2026-08-25",
+            "description": "MP*MERCADOLIVRE",
+            "amount": -1200.00,
+            "type": "DEBIT",
+            "status": "POSTED",
+            "category": "Equipment",
+            "paymentData": {
+                "paymentMethod": "CREDIT_CARD"
+            }
+        }
+    ],
+    "bills": [
+        {
+            "id": "bill_102",
+            "status": "OVERDUE",
+            "totalAmount": 3400.00,
+            "dueDate": "2026-08-15"
+        }
+    ],
+    "loans": [],
+    "dataEngineering": {
+        "identityEnrichment": {
+            "fraudRiskScore": "MEDIUM"
+        },
+        "dynamicIncomeEstimation": {
+            "3mRollingAverageIncome": 5420.00,
+            "incomeVariance": "HIGH",
+            "modelConfidence": 0.75,
+            "primarySource": "PULVERIZED_PIX"
+        },
+        "patternsAndRecurrences": {
+            "expenseConcentrationDays": [
+                10,
+                15,
+                20
+            ],
+            "behavioralAlert": "PF_PJ_ACCOUNT_MIXING",
+            "30dDefaultRisk": "HIGH"
+        },
+        "proprietaryCreditScore": {
+            "score": 420,
+            "trend": "DOWNWARD",
+            "financialLeverage": "HIGH_VULNERABILITY"
+        }
+    },
+    "iaiOverView": {
+        "trigger": "tax_reserve_auto",
+        "context": "Guia DAS-MEI de R$ 75,60 vence em 5 dias.",
+        "action_prompt": "Retive automaticamente R$ 75,60 dos seus recebimentos Pix de hoje no seu Cofrinho de Impostos. Quer que eu já agende o pagamento da DAS?"
+    }
+}
