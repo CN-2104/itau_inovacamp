@@ -18,6 +18,7 @@ import {
 } from "lucide-react"
 
 import { createChatTransport, createThreadId, type ChatMessage } from "@/lib/ai"
+import { createMockChatTransport } from "@/lib/mock-chat"
 import { cn } from "@/lib/utils"
 import { ChatBackdrop } from "@/components/chat-backdrop"
 import { MessageAnimated } from "@/components/message-animated"
@@ -110,22 +111,16 @@ const DEFAULT_SUGGESTIONS: ChatSuggestionGroup[] = [
     heading: "Ações rápidas",
     items: [
       {
-        emphasis: "Rastrear boletos",
-        label: "em todas as minhas contas",
-        action: "navigate",
-        screen: "rastrear-boletos",
-      },
-      {
         emphasis: "Trazer meu financiamento",
         label: "pro Itaú",
         action: "navigate",
         screen: "migrar-financiamento",
       },
       {
-        emphasis: "Cancele meus débitos automáticos",
-        label: "em outras contas",
+        emphasis: "Traga meus débitos automáticos",
+        label: "de outras contas",
         action: "navigate",
-        screen: "cancelar-debitos-automaticos",
+        screen: "migrar-debitos-automaticos",
       },
     ],
   },
@@ -140,6 +135,12 @@ export type ChatProps = {
   body?: Record<string, unknown>
   /** Conversation id sent as `thread_id`. Generated once when omitted. */
   threadId?: string
+  /**
+   * Answers from the scripted transport in `lib/mock-chat` instead of calling
+   * the backend. Defaults to on while no endpoint is configured, so the demo
+   * runs offline until `VITE_CHAT_API_URL` (or `api`) points at the graph.
+   */
+  mock?: boolean
   /** Transcript to hydrate the chat with, e.g. a persisted conversation. */
   initialMessages?: ChatMessage[]
   /** File types the attachment picker accepts. */
@@ -161,6 +162,7 @@ export function Chat({
   headers,
   body,
   threadId,
+  mock = !api && !import.meta.env.VITE_CHAT_API_URL,
   initialMessages,
   accept = "image/*,.pdf,.txt,.csv,.md",
   suggestions = DEFAULT_SUGGESTIONS,
@@ -179,14 +181,23 @@ export function Chat({
   const imageInputRef = React.useRef<HTMLInputElement>(null)
   const resolvedThreadId = threadId ?? generatedThreadId
 
+  // Kept for the whole chat: the mock owns its message id counter, so a new
+  // instance per render would hand out ids that are already on screen.
+  const mockTransport = React.useMemo(
+    () => (mock ? createMockChatTransport() : null),
+    [mock]
+  )
+
   // useChat resolves the transport lazily on each send, so rebuilding it here
   // keeps a rotating token or changed config in sync without resetting state.
-  const transport = createChatTransport({
-    api,
-    headers,
-    body: { ...body, enabled_tools: enabledTools },
-    threadId: resolvedThreadId,
-  })
+  const transport =
+    mockTransport ??
+    createChatTransport({
+      api,
+      headers,
+      body: { ...body, enabled_tools: enabledTools },
+      threadId: resolvedThreadId,
+    })
 
   const { messages, sendMessage, status, stop, regenerate, error, clearError } =
     useChat<ChatMessage>({
