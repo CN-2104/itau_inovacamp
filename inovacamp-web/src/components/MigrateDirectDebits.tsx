@@ -64,10 +64,10 @@ export function MigrateDirectDebits({
     >
       <div className="mx-auto w-full max-w-2xl px-4 py-6 pb-[max(1.5rem,env(safe-area-inset-bottom))]">
         <h1 className="font-heading text-xl font-semibold">
-          Traga meus débitos automáticos de outras contas
+          Traga meus pagamentos recorrentes de outras contas
         </h1>
         <p className="mt-1 text-sm text-muted-foreground">
-          Encontramos {directDebits.length} débitos automáticos em outros
+          Encontramos {directDebits.length} pagamentos recorrentes em outros
           bancos, somando {formatBRL(monthlyTotal)} por mês. Traga para o Itaú e
           pague tudo pela mesma conta.
         </p>

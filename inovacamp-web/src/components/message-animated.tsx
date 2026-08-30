@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { BrainIcon, PaperclipIcon } from "lucide-react"
+import { PaperclipIcon } from "lucide-react"
 import { motion, useReducedMotion } from "motion/react"
 
 import type { MessageAnimationPreset } from "@/lib/message-animations"
@@ -23,12 +23,12 @@ type MessageAnimatedPart = {
 type MessageAnimatedContentPart =
   | { key: string; type: "text" | "reasoning"; text: string }
   | {
-      key: string
-      type: "file"
-      url: string
-      mediaType: string
-      filename?: string
-    }
+    key: string
+    type: "file"
+    url: string
+    mediaType: string
+    filename?: string
+  }
 
 type MessageAnimatedMessage = {
   id: string
@@ -126,27 +126,7 @@ function MessageAnimatedRow({
             .filter(Boolean)
 
           if (part.type === "reasoning") {
-            return (
-              <div
-                key={part.key}
-                className="w-full border-l-2 border-muted-foreground/30 pl-3 text-muted-foreground"
-              >
-                <div className="mb-1 flex items-center gap-1.5 text-xs font-medium">
-                  <BrainIcon className="size-3.5" />
-                  Reasoning
-                </div>
-                <div className="space-y-1.5 text-sm">
-                  {paragraphs.map((paragraph, paragraphIndex) => (
-                    <p
-                      key={`${part.key}-${paragraphIndex}`}
-                      className="whitespace-pre-wrap"
-                    >
-                      {paragraph}
-                    </p>
-                  ))}
-                </div>
-              </div>
-            )
+            return null
           }
 
           return (
@@ -186,17 +166,17 @@ function getMessageAnimatedContentParts(
           return typeof part.url === "string" &&
             typeof part.mediaType === "string"
             ? [
-                {
-                  key,
-                  type: "file",
-                  url: part.url,
-                  mediaType: part.mediaType,
-                  filename:
-                    typeof part.filename === "string"
-                      ? part.filename
-                      : undefined,
-                },
-              ]
+              {
+                key,
+                type: "file",
+                url: part.url,
+                mediaType: part.mediaType,
+                filename:
+                  typeof part.filename === "string"
+                    ? part.filename
+                    : undefined,
+              },
+            ]
             : []
         }
 

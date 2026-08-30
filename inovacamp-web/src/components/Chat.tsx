@@ -77,17 +77,17 @@ type ChatSuggestionBase = {
 
 export type ChatSuggestion =
   | (ChatSuggestionBase & {
-      /** Sends a prompt into the conversation. The default. */
-      action?: "send"
-      /** Text sent. Defaults to the emphasis plus the label. */
-      prompt?: string
-    })
+    /** Sends a prompt into the conversation. The default. */
+    action?: "send"
+    /** Text sent. Defaults to the emphasis plus the label. */
+    prompt?: string
+  })
   | (ChatSuggestionBase & {
-      /** Leaves the chat for a dedicated flow instead of sending a prompt. */
-      action: "navigate"
-      /** Destination handed to `onNavigate`. */
-      screen: string
-    })
+    /** Leaves the chat for a dedicated flow instead of sending a prompt. */
+    action: "navigate"
+    /** Destination handed to `onNavigate`. */
+    screen: string
+  })
 
 export type ChatSuggestionGroup = {
   heading: string
@@ -99,12 +99,9 @@ const DEFAULT_SUGGESTIONS: ChatSuggestionGroup[] = [
   {
     heading: "Iniciar conversa",
     items: [
-      {
-        label:
-          "Meu salário será suficiente para cobrir os boletos dessa semana?",
-      },
-      { label: "Quanto eu gastei com transporte no último mês?" },
-      { label: "Quais são meus boletos em aberto?" },
+      { label: "Trazer meu boleto de luz pra cá" },
+      { label: "Me ajude a trazer meu crédito pessoal" },
+      { label: "Traga meus Pix Agendados para o Itaú" },
     ],
   },
   {
@@ -117,7 +114,7 @@ const DEFAULT_SUGGESTIONS: ChatSuggestionGroup[] = [
         screen: "migrar-financiamento",
       },
       {
-        emphasis: "Traga meus débitos automáticos",
+        emphasis: "Traga meus pagamentos recorrentes",
         label: "de outras contas",
         action: "navigate",
         screen: "migrar-debitos-automaticos",
@@ -248,7 +245,7 @@ export function Chat({
 
     submitPrompt(
       suggestion.prompt ??
-        [suggestion.emphasis, suggestion.label].filter(Boolean).join(" ")
+      [suggestion.emphasis, suggestion.label].filter(Boolean).join(" ")
     )
   }
 

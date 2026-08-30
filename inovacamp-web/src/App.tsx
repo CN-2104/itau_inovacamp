@@ -19,13 +19,22 @@ const SCREEN_TRANSITION = { duration: 0.32, ease: [0.32, 0.72, 0, 1] } as const
 
 export function App() {
   const [screen, setScreen] = React.useState<Screen>("chat")
+  const [chatKey, setChatKey] = React.useState(0)
   const shouldReduceMotion = useReducedMotion()
   const isOverlayOpen = screen !== "chat"
   const ActiveScreen = screen === "chat" ? null : SCREENS[screen]
 
+  function handleBack() {
+    if (screen === "chat") {
+      setChatKey((key) => key + 1)
+    } else {
+      setScreen("chat")
+    }
+  }
+
   return (
     <div className="flex h-dvh min-h-0 flex-col">
-      <Header onBack={() => setScreen("chat")} />
+      <Header onBack={handleBack} />
       <main className="relative flex min-h-0 flex-1 flex-col overflow-hidden">
         {/* Kept mounted behind the overlay so the conversation survives a
             round trip to another screen. */}
@@ -40,6 +49,7 @@ export function App() {
           transition={SCREEN_TRANSITION}
         >
           <Chat
+            key={chatKey}
             onNavigate={(target) => {
               if (target in SCREENS) {
                 setScreen(target as Screen)

@@ -23,6 +23,24 @@ type MockReply = {
 
 const MOCK_REPLIES: MockReply[] = [
   {
+    match: /luz|energia|enel|light|cemig|copel/,
+    reasoning:
+      "Buscando histórico de pagamentos de conta de luz nas contas conectadas para configurar débito automático no Itaú.",
+    text: "Vi que você paga sua conta de luz pelo Santander todo dia 12. Posso programar para trazer esse pagamento para o Itaú a partir do próximo mês em débito automático. O que acha?",
+  },
+  {
+    match: /crédito|credito|emprestimo|empréstimo/,
+    reasoning:
+      "Analisando contratos de crédito pessoal em outras instituições para simular portabilidade.",
+    text: "Você tem um empréstimo pessoal no Nubank com parcelas de R$ 430,00 (3,2% a.m.). Se você trouxer para o Itaú, conseguimos reduzir a taxa para 2,1% a.m., e sua parcela cai para R$ 395,00. Posso iniciar a portabilidade?",
+  },
+  {
+    match: /pix agendado|pix/,
+    reasoning:
+      "Consultando transferências Pix agendadas em outros bancos via Open Finance.",
+    text: "Encontrei 2 Pix agendados no Bradesco para esta semana (total de R$ 850,00). Quer que eu cancele por lá e reprograme essas transferências aqui pelo Itaú usando seu saldo da conta corrente?",
+  },
+  {
     match: /salario|cobrir|suficiente|fechar o mes|previsao|prever/,
     reasoning:
       "Comparando o saldo das contas conectadas com os vencimentos dos próximos 7 dias e a data prevista do salário.",
@@ -55,13 +73,13 @@ const MOCK_REPLIES: MockReply[] = [
   {
     match: /debitos? automaticos?|conta de luz|agua|internet|condominio/,
     reasoning:
-      "Listando os débitos automáticos ativos nas contas conectadas e a média cobrada nos últimos 6 meses.",
-    text: "Você tem 6 débitos automáticos em outros bancos, somando R$ 1.323,40 por mês:\n\n• Condomínio: R$ 620,00 (dia 5, Bradesco)\n• Porto Seguro Auto: R$ 210,00 (dia 10, Bradesco)\n• Enel: ~R$ 187,40 (dia 12, Santander)\n• Vivo Fibra: R$ 129,90 (dia 15, Bradesco)\n• Sabesp: ~R$ 96,20 (dia 8, Santander)\n• Claro: R$ 79,90 (dia 20, Nubank)\n\nTrazendo todos para o Itaú, você paga tudo pela mesma conta e eu consigo avisar antes de cada débito. Quer que eu abra a lista?",
+      "Listando os pagamentos recorrentes ativos nas contas conectadas e a média cobrada nos últimos 6 meses.",
+    text: "Você tem 6 pagamentos recorrentes em outros bancos, somando R$ 1.323,40 por mês:\n\n• Condomínio: R$ 620,00 (dia 5, Bradesco)\n• Porto Seguro Auto: R$ 210,00 (dia 10, Bradesco)\n• Enel: ~R$ 187,40 (dia 12, Santander)\n• Vivo Fibra: R$ 129,90 (dia 15, Bradesco)\n• Sabesp: ~R$ 96,20 (dia 8, Santander)\n• Claro: R$ 79,90 (dia 20, Nubank)\n\nTrazendo todos para o Itaú, você paga tudo pela mesma conta e eu consigo avisar antes de cada débito. Quer que eu abra a lista?",
   },
   {
     match: /assinatura|recorrente|cancel/,
     reasoning:
-      "Cruzando as cobranças recorrentes dos últimos 3 meses para separar débitos automáticos de assinaturas no cartão.",
+      "Cruzando as cobranças recorrentes dos últimos 3 meses para separar pagamentos recorrentes de assinaturas no cartão.",
     text: "Identifiquei R$ 214,70 por mês em cobranças recorrentes:\n\n• Streaming e apps: R$ 89,80\n• Academia: R$ 79,90\n• Seguro celular: R$ 24,90\n• Nuvem e armazenamento: R$ 20,10\n\nDuas delas não têm uso registrado há mais de 60 dias. Quer que eu monte o pedido de cancelamento dessas?",
   },
   {
@@ -97,7 +115,7 @@ export type CreateMockChatTransportOptions = {
  * it owns the message id counter, so recreating it would repeat ids.
  */
 export function createMockChatTransport({
-  delayMs = 18,
+  delayMs = 45,
 }: CreateMockChatTransportOptions = {}) {
   return createChat<ChatMessage>().transport({
     delayMs,
