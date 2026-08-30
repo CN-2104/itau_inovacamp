@@ -325,6 +325,7 @@ export function Chat({
                       message={message}
                       userVariant="brand"
                       scrollAnchor={message.role === "user"}
+                      onAction={(actionText) => submitPrompt(actionText)}
                     />
                   ))}
                   {status === "submitted" ? <PendingMessage /> : null}

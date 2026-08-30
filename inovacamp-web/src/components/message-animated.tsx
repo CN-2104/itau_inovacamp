@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { PaperclipIcon } from "lucide-react"
+import { PaperclipIcon, CornerUpRightIcon } from "lucide-react"
 import { motion, useReducedMotion } from "motion/react"
 
 import type { MessageAnimationPreset } from "@/lib/message-animations"
@@ -45,6 +45,7 @@ function MessageAnimated({
   assistantVariant = "ghost",
   scrollAnchor,
   userVariant = "muted",
+  onAction,
   ...props
 }: Omit<
   React.ComponentProps<typeof MotionMessageScrollerItem>,
@@ -54,6 +55,7 @@ function MessageAnimated({
   assistantVariant?: React.ComponentProps<typeof Bubble>["variant"]
   message: MessageAnimatedMessage
   userVariant?: React.ComponentProps<typeof Bubble>["variant"]
+  onAction?: (actionText: string) => void
 }) {
   const shouldReduceMotion = useReducedMotion()
   const isUserMessage = message.role === "user"
@@ -73,6 +75,7 @@ function MessageAnimated({
           message={message}
           assistantVariant={assistantVariant}
           userVariant={userVariant}
+          onAction={onAction}
         />
       </MotionMessageScrollerItem>
     )
@@ -89,6 +92,7 @@ function MessageAnimated({
         message={message}
         assistantVariant={assistantVariant}
         userVariant={userVariant}
+        onAction={onAction}
       />
     </MotionMessageScrollerItem>
   )
@@ -98,10 +102,12 @@ function MessageAnimatedRow({
   message,
   assistantVariant,
   userVariant,
+  onAction,
 }: {
   assistantVariant: React.ComponentProps<typeof Bubble>["variant"]
   message: MessageAnimatedMessage
   userVariant: React.ComponentProps<typeof Bubble>["variant"]
+  onAction?: (actionText: string) => void
 }) {
   const isUserMessage = message.role === "user"
   const parts = getMessageAnimatedContentParts(message)
@@ -129,24 +135,41 @@ function MessageAnimatedRow({
             return null
           }
 
+          const isPortabilityOffer =
+            !isUserMessage &&
+            part.text.includes("Posso iniciar a portabilidade?")
+
           return (
-            <Bubble
-              key={part.key}
-              variant={isUserMessage ? userVariant : assistantVariant}
-            >
-              <BubbleContent
-                className={cn("space-y-2", isUserMessage && "rounded-ee-none")}
-              >
-                {paragraphs.map((paragraph, paragraphIndex) => (
-                  <p
-                    key={`${part.key}-${paragraphIndex}`}
-                    className="whitespace-pre-wrap"
-                  >
-                    {paragraph}
-                  </p>
-                ))}
-              </BubbleContent>
-            </Bubble>
+            <React.Fragment key={part.key}>
+              <Bubble variant={isUserMessage ? userVariant : assistantVariant}>
+                <BubbleContent
+                  className={cn("space-y-2", isUserMessage && "rounded-ee-none")}
+                >
+                  {paragraphs.map((paragraph, paragraphIndex) => (
+                    <p
+                      key={`${part.key}-${paragraphIndex}`}
+                      className="whitespace-pre-wrap"
+                    >
+                      {paragraph}
+                    </p>
+                  ))}
+                </BubbleContent>
+              </Bubble>
+
+              {isPortabilityOffer && onAction && (
+                <motion.button
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.4, duration: 0.3, ease: "easeOut" }}
+                  type="button"
+                  onClick={() => onAction("Sim, por favor.")}
+                  className="mt-1 flex w-fit items-center gap-2 rounded-full border bg-background px-3.5 py-2 text-sm font-medium text-foreground shadow-sm transition-colors hover:bg-muted"
+                >
+                  <CornerUpRightIcon className="size-4 text-muted-foreground" />
+                  Sim, por favor
+                </motion.button>
+              )}
+            </React.Fragment>
           )
         })}
       </MessageContent>

@@ -26,19 +26,25 @@ const MOCK_REPLIES: MockReply[] = [
     match: /luz|energia|enel|light|cemig|copel/,
     reasoning:
       "Buscando histórico de pagamentos de conta de luz nas contas conectadas para configurar débito automático no Itaú.",
-    text: "Vi que você paga sua conta de luz pelo Santander todo dia 12. Posso programar para trazer esse pagamento para o Itaú a partir do próximo mês em débito automático. O que acha?",
+    text: "Vi que você paga sua conta de luz pelo Santander todo dia 12. Posso monitorar esse pagamento e você paga com 1 clique. O que acha?",
   },
   {
     match: /crédito|credito|emprestimo|empréstimo/,
     reasoning:
       "Analisando contratos de crédito pessoal em outras instituições para simular portabilidade.",
-    text: "Você tem um empréstimo pessoal no Nubank com parcelas de R$ 430,00 (3,2% a.m.). Se você trouxer para o Itaú, conseguimos reduzir a taxa para 2,1% a.m., e sua parcela cai para R$ 395,00. Posso iniciar a portabilidade?",
+    text: "Você tem um empréstimo pessoal no Nubank com parcelas de R$ 430,00 (3,2% a.m.). Analisei seu perfil de crédito atual e consegui uma oferta pré-aprovada para 2,1% a.m., e sua parcela cai para R$ 395,00. Posso iniciar a portabilidade?",
+  },
+  {
+    match: /sim(.*)por favor|sim(.*)pode|iniciar(.*)portabilidade/,
+    reasoning:
+      "Iniciando processo de portabilidade de crédito do Nubank para o Itaú.",
+    text: "Portabilidade solicitada! Com a transferência do saldo devedor para o Itaú, além de você economizar R$ 35 por mês, esse contrato te leva direto para o Nível 3 do Minhas Vantagens. Isso libera até 60% de desconto em ingressos de cinema e descontos em instituições de ensino. O contrato digital já está no seu e-mail.",
   },
   {
     match: /pix agendado|pix/,
     reasoning:
       "Consultando transferências Pix agendadas em outros bancos via Open Finance.",
-    text: "Encontrei 2 Pix agendados no Bradesco para esta semana (total de R$ 850,00). Quer que eu cancele por lá e reprograme essas transferências aqui pelo Itaú usando seu saldo da conta corrente?",
+    text: "Encontrei 2 Pix agendados no Bradesco para esta semana (total de R$ 850,00). Quer que eu traga seu saldo pra cá e reprograme essas transferências aqui pelo Itaú?",
   },
   {
     match: /salario|cobrir|suficiente|fechar o mes|previsao|prever/,
