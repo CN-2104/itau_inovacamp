@@ -1,0 +1,104 @@
+---
+config:
+  theme: redux
+  look: neo
+  fontFamily: '''Recursive Variable'', sans-serif'
+  themeVariables:
+    fontFamily: '''Recursive Variable'', sans-serif'
+  layout: elk
+---
+flowchart RL
+ subgraph Frontend["Aplicação Frontend (React / Next.js)"]
+        UI["Interface de Chat"]
+        QA["Quick Actions Predefinidas"]
+  end
+ subgraph IA["Orquestração de IA (Backend)"]
+        LangGraph["Agente ia.i - LangGraph"]
+        MCP["Ferramentas / Pluggy MCP"]
+  end
+ subgraph Pluggy["Infraestrutura Pluggy (Open Finance)"]
+        Dados["Conectores de Dados / Enrich API"]
+        Pagamentos["Iniciação de Pagamentos / ITP"]
+  end
+ subgraph Bancos["Instituições Financeiras (Origem)"]
+        BancoB["Banco B"]
+        BancoC["Banco C"]
+  end
+ subgraph Portabilidades["Esteiras de Portabilidade"]
+        PortCred["Crédito Pessoal"]
+        PortConsig["Crédito Consignado"]
+        PortCheque["Cheque Especial"]
+        PortVeic["Financiamento de Veículos"]
+        PortImob["Crédito Imobiliário"]
+        PortCartao["Saldo Devedor (Cartão)"]
+  end
+ subgraph Ecossistema_Itau["Ecossistema Itaú (Destino)"]
+        MinhasVantagens["Minhas Vantagens"]
+        TransfOF["Transferência via Open Finance"]
+        Outras["Itaú Shop / Seguros / Renegociação"]
+        Portabilidades
+  end
+    UI -- Linguagem Natural --> LangGraph
+    QA -- Payload Estruturado --> LangGraph
+    LangGraph <-- Invoca Ferramentas --> MCP
+    MCP <-- Chamadas REST --> Dados
+    MCP <-- Comandos REST --> Pagamentos
+    Dados <-- Leitura e Sincronização --> BancoB & BancoC
+    Pagamentos <-- Smart Transfers / Pix --> BancoB & BancoC
+    LangGraph -- Calcula Recompensas --> MinhasVantagens
+    LangGraph -- Orquestra Oferta Personalizada --> Portabilidades
+    LangGraph -- Sugere Benefícios Cruzados --> Outras
+    Pagamentos -- Liquida Transferência Autorizada --> TransfOF
+
+
+
+    UI@{ shape: rounded}
+    QA@{ shape: rounded}
+    LangGraph@{ shape: rounded}
+    MCP@{ shape: rounded}
+    Dados@{ shape: rounded}
+    Pagamentos@{ shape: rounded}
+    BancoB@{ shape: rounded}
+    BancoC@{ shape: rounded}
+    MinhasVantagens@{ shape: rounded}
+    TransfOF@{ shape: rounded}
+    Outras@{ shape: rounded}
+    PortCred@{ shape: rounded}
+    PortConsig@{ shape: rounded}
+    PortCheque@{ shape: rounded}
+    PortVeic@{ shape: rounded}
+    PortImob@{ shape: rounded}
+    PortCartao@{ shape: rounded}
+    
+    UI:::Class_01
+    QA:::Class_01
+    LangGraph:::Class_01
+    MCP:::Class_01
+    Dados:::Class_01
+    Pagamentos:::Class_01
+    BancoB:::Class_01
+    BancoC:::Class_01
+    MinhasVantagens:::Class_01
+    TransfOF:::Class_01
+    Outras:::Class_01
+    PortCred:::Class_01
+    PortConsig:::Class_01
+    PortCheque:::Class_01
+    PortVeic:::Class_01
+    PortImob:::Class_01
+    PortCartao:::Class_01
+    
+    Bancos:::Class_01
+    Pluggy:::Class_01
+    IA:::Class_01
+    Frontend:::Class_01
+    Ecossistema_Itau:::Class_01
+    Portabilidades:::Class_01
+    
+    classDef Class_01 stroke:#FF6D00, fill:#FFE0B2, color:#333
+    style Ecossistema_Itau fill:#FFE0B2,stroke:#FF6D00,color:#FF6D00,font-size:22px,stroke-width:2px
+    style Bancos fill:#FF6D00,color:#fff
+    style Pluggy fill:#FF6D00,color:#fff
+    style IA fill:#FF6D00,color:#fff
+    style Frontend fill:#FF6D00,color:#fff
+    style Portabilidades fill:#FFCC80,stroke:#FF9800
